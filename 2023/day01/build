@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -xe
+
+g++ -O2 -ggdb -Werror -Wextra -pedantic main.c -o main
