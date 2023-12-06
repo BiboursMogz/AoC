@@ -2,4 +2,4 @@
 
 set -xe
 
-gcc -O0 -ggdb -Werror -Wextra -pedantic main.c -o main
+gcc -O0 -ggdb -Werror -Wextra -pedantic dayOne.c -o main
