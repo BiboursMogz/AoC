@@ -12,7 +12,7 @@ int partOne(char *Input)
 	char *last = 0;
 	for (char *c = Input; *c; ++c) 
 	{
-	if (('0' <= *c) && (*c <= '9'))
+		if (('0' <= *c) && (*c <= '9'))
 		{
 			if (!first)
 			{
@@ -23,7 +23,7 @@ int partOne(char *Input)
 			}
 		}
 
-	if (*c == '\n')
+		if (*c == '\n')
 		{
 			if (first)
 			{
@@ -52,12 +52,97 @@ probe_result probe(char* input)
 	}
 }
 
+void recordNumber(const int Nbr,char* pNbr, char **pFirst, int* firstNbr, char **pLast, int *lastNbr)
+{
+	if (!(*pFirst))
+	{
+		*lastNbr = Nbr;
+		*firstNbr = Nbr * 10;
+
+		*pFirst = *pLast = pNbr;
+	} else if (*pLast < pNbr)
+	{
+		*lastNbr = Nbr;
+		*pLast = pNbr;
+	}
+}
+
 int partTwo(char* input)
 {
 	int result = 0;
+
+	int firstNbr = -1;
+	char *pFirst = 0;
+
+	int lastNbr = -1;
+	char *pLast = 0;
+
+	for (;*input; ++input)
+	{
+		char c = *input;
+
+		if (('0' <= c) && (c <= '9'))
+		{
+			recordNumber(c - '0', input, &pFirst, &firstNbr, &pLast, &lastNbr);
+		} 
+		else if ((c == 'o') && (*(input + 1) == 'n') && (*(input + 2) == 'e'))
+		{
+			recordNumber(1, input, &pFirst, &firstNbr, &pLast, &lastNbr);
+		} 
+		else if ((c == 't') && (*(input + 1) == 'w') && (*(input + 2) == 'o'))
+		{
+			recordNumber(2, input, &pFirst, &firstNbr, &pLast, &lastNbr);
+		}
+		else if ((c == 't') && (*(input + 1) == 'h') && (*(input + 2) == 'r') && (*(input + 3) == 'e')&& (*(input + 4) == 'e'))
+		{
+			recordNumber(3, input, &pFirst, &firstNbr, &pLast, &lastNbr);
+		}
+		else if ((c == 'f') && (*(input + 1) == 'o') && (*(input + 2) == 'u') && (*(input + 3) == 'r'))
+		{
+			recordNumber(4, input, &pFirst, &firstNbr, &pLast, &lastNbr);
+		}
+		else if ((c == 'f') && (*(input + 1) == 'i') && (*(input + 2) == 'v') && (*(input + 3) == 'e'))
+		{
+			recordNumber(5, input, &pFirst, &firstNbr, &pLast, &lastNbr);
+		}
+		else if ((c == 's') && (*(input + 1) == 'i') && (*(input + 2) == 'x') )
+		{
+			recordNumber(6, input, &pFirst, &firstNbr, &pLast, &lastNbr);
+		}
+		else if ((c == 's') && (*(input + 1) == 'e') && (*(input + 2) == 'v') && (*(input + 3) == 'e')&& (*(input + 4) == 'n'))
+		{
+			recordNumber(7, input, &pFirst, &firstNbr, &pLast, &lastNbr);
+		}
+		else if ((c == 'e') && (*(input + 1) == 'i') && (*(input + 2) == 'g') && (*(input + 3) == 'h')&& (*(input + 4) == 't'))
+		{
+			recordNumber(8, input, &pFirst, &firstNbr, &pLast, &lastNbr);
+		}
+		else if ((c == 'n') && (*(input + 1) == 'i') && (*(input + 2) == 'n') && (*(input + 3) == 'e'))
+		{
+			recordNumber(9, input, &pFirst, &firstNbr, &pLast, &lastNbr);
+		}
+		else if (c == '\n')
+		{
+			result += firstNbr + lastNbr;
+
+			pFirst = 0;
+			pLast = 0;
+			fprintf(stdout, "\t\tFound : %d and %d", firstNbr, lastNbr);
+		}
+		fprintf(stdout, "%c", c);
+
+		//
+		// for (char *probe = input;*probe; ++probe)
+		// {
+		//
+		// 	fprintf(stdout, "%c", *probe);
+		// }
+	}
+
 	/*
 	* 'o' -> 'n' -> 'e'
 	*/
+	return result;
 }
 
 int main(int argc, char **argv)
